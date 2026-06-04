@@ -28,12 +28,7 @@ describe("F03 updateRestaurantInfo() — Authorised (abd)", () => {
 describe("F03 updateRestaurantInfo() — Unauthorised (ace)", () => {
   it("rejects customer role with 403 (ace)", async () => {
     console.log("");
-    const { status, body } = await api(
-      "PUT",
-      "/api/v1/restaurant",
-      { name: "Unauthorised Edit" },
-      { headers: { "x-role": "customer" } }
-    );
+    const { status, body } = await api("PUT", "/api/v1/restaurant", { name: "Unauthorised Edit" }, { headers: { "x-role": "customer" } });
     expect(status).toBe(403);
     expect(body.success).toBe(false);
     expect(body.error).toContain("Access denied");
@@ -47,7 +42,7 @@ describe("UTD-0008: F04 updateMenuItem() — Create (abdegh)", () => {
     const { status, body } = await api("POST", "/api/v1/menu-items", {
       name: "午餐 Lunch",
       price: 5.0,
-      category: [{ id: "cuisine", name: "In USM" }],
+      category: [{ id: "in-usm", name: "In USM" }],
       desc: "Mushroom + Nestume Chicken + Burger's",
       variant: { 1: { name: "Default", extra: 1, sequence: 0 } },
       add_on: {
@@ -66,7 +61,7 @@ describe("UTD-0009: F04 updateMenuItem() — Update (abdfih)", () => {
     const id = "15f877d8_d57f_45c4_a436_0780a5868c8a";
     const { status, body } = await api("PUT", `/api/v1/menu-items/${id}`, {
       price: 5.5,
-      category: [{ id: "service", name: "Outside USM" }],
+      category: [{ id: "outside-usm", name: "Outside USM" }],
     });
     expect(status).toBe(200);
     expect(body.success).toBe(true);
@@ -121,7 +116,7 @@ describe("UTD-0011/UTD-0012: F05 updateOrderSettings() — Open (abdegh), Close 
       "PUT",
       "/api/v1/orders/settings",
       { isOrderOpen: true, deliveryDate: "2026-05-19" },
-      { headers: { "x-role": "customer" } }
+      { headers: { "x-role": "customer" } },
     );
     expect(status).toBe(403);
     expect(body.success).toBe(false);
@@ -134,7 +129,7 @@ describe("F15 addLocation() — Add (abdeg), 403 (ach), 404 (abdfi)", () => {
   it("adds a new location to a category", async () => {
     console.log("");
     const { status, body } = await api("POST", "/api/v1/locations", {
-      categoryId: "cuisine",
+      categoryId: "in-usm",
       lat: 5.357,
       lng: 100.302,
       name: "Restu Saujana Cafe",
@@ -164,7 +159,7 @@ describe("F15 addLocation() — Add (abdeg), 403 (ach), 404 (abdfi)", () => {
       "POST",
       "/api/v1/locations",
       {
-        categoryId: "cuisine",
+        categoryId: "in-usm",
         lat: 5.357,
         lng: 100.302,
         name: "Test",

@@ -57,18 +57,18 @@ describe("F06 getRestaurantData() — Menu items (abd)", () => {
 
   it("filters by category In USM", async () => {
     console.log("");
-    const { body } = await api("GET", "/api/v1/menu-items?category=cuisine");
+    const { body } = await api("GET", "/api/v1/menu-items?category=in-usm");
     body.forEach((item) => {
-      const has = item.category.some((c) => c.id === "cuisine");
+      const has = item.category.some((c) => c.id === "in-usm");
       expect(has).toBe(true);
     });
   });
 
   it("filters by category Outside USM", async () => {
     console.log("");
-    const { body } = await api("GET", "/api/v1/menu-items?category=service");
+    const { body } = await api("GET", "/api/v1/menu-items?category=outside-usm");
     body.forEach((item) => {
-      const has = item.category.some((c) => c.id === "service");
+      const has = item.category.some((c) => c.id === "outside-usm");
       expect(has).toBe(true);
     });
   });
